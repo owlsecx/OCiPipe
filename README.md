@@ -18,18 +18,18 @@
 
 ## 📌 Overview
 
-Offline CI/CD pipeline security linter (GitHub Actions, GitLab, Bitbucket, Azure, Drone)
+OCiPipe is an offline, read-only security linter for CI/CD pipelines, supporting GitHub Actions, GitLab CI, Bitbucket, Azure Pipelines and Drone plus a generic shell analyzer. A stdlib YAML-lite parser with line tracking feeds taint analysis that follows untrusted context through env and outputs into shell commands to catch second-order injection. Findings map to CWE, MITRE ATT&CK and OWASP CICD-SEC with a score and grade, and it never executes or modifies pipelines.
 
 ---
 
 ## ✨ Features
 
-- Stdlib YAML-lite parser (anchors, merge keys, flow, block scalars, multi-doc) with line tracking
-- GitHub Actions, GitLab CI, Bitbucket, Azure, Drone engines + generic shell analyzer
-- Taint tracking: untrusted context → env → step / job outputs → shell (second-order injection)
-- CWE / MITRE ATT&CK / OWASP CICD-SEC-1..10 mapping, inline suppression, score & grade
-- TXT / MD / JSON / CSV / SARIF export, --demo test
-- Read-only: never executes or modifies pipelines
+- Engines for GitHub Actions, GitLab CI, Bitbucket, Azure and Drone
+- Stdlib YAML-lite parser (anchors, merge keys, flow, block scalars) with line tracking
+- Taint tracking of untrusted context → env → outputs → shell (pwn-request, injection)
+- Action/image pinning and secrets checks
+- CWE / MITRE ATT&CK / OWASP CICD-SEC mapping with inline suppression and scoring
+- Export TXT/MD/JSON/CSV/SARIF with CI fail-on gates
 
 ---
 
@@ -43,7 +43,10 @@ Offline CI/CD pipeline security linter (GitHub Actions, GitLab, Bitbucket, Azure
 ## 🚀 Usage
 
 ```bash
-./OCiPipe
+./OCiPipe --path ./.github/workflows/
+./OCiPipe -p .gitlab-ci.yml --format sarif -o report.sarif --fail-on high
+./OCiPipe --demo
+./OCiPipe --help
 ```
 
 ---
